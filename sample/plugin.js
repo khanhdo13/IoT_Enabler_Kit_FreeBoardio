@@ -6,8 +6,7 @@
             "description" : "Some sort of description <strong>with optional html!</strong>",
 
     		"external_scripts" : [
-    			//"http://mydomain.com/myscript1.js",
-    		    //"http://mydomain.com/myscript2.js"
+    			"https://raw.githubusercontent.com/buglabs/dweetio-client/master/dweet.io.js"
     		],
     		"settings"    : [
     			{
