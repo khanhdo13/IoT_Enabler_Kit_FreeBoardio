@@ -2,7 +2,6 @@ window.targetThing = "";
 window.userEmailAddress = "";
 window.currentMachine = "";
 window.LEDstore = [];
-window.buzzerState = "";
 $.support.cors = true;
 
 setTimeout(function(){	
@@ -31,17 +30,21 @@ setTimeout(function(){
 	});
 	
 	$('button#buzzerButton').click(function(e){
+		var buzzerState = "";
 		dweetio.get_latest_dweet_for(window.targetThing, function(err, dweet){
     			var dweet = dweet[0]; // Dweet is always an array of 1
-			window.buzzerState = dweet.content.Buzzer;
+			buzzerState = dweet.content.Buzzer;
 		});
-	
-		if (window.buzzerState) {
-			window.buzzOff();
-		}
-		else {
-			window.buzzOn();
-		}
+		
+		setTimeout(function(){
+  			if (buzzerState) {
+				window.buzzOff();
+			}
+			else {
+				window.buzzOn();
+			}
+		}, 500); 
+
 		//window.sendBuzz();	
 	});
 	
