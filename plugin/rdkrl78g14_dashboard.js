@@ -2,6 +2,7 @@ window.targetThing = "";
 window.userEmailAddress = "";
 window.currentMachine = "";
 window.LEDstore = [];
+window.buzzerState;
 $.support.cors = true;
 
 setTimeout(function(){	
@@ -30,8 +31,11 @@ setTimeout(function(){
 	});
 	
 	$('button#buzzerButton').click(function(e){
-	var buzzerState = datasources["DemoBoard"]["Buzzer"];
-        if (buzzerState) {
+	dweetio.get_latest_dweet_for("my-thing", function(err, dweet){
+    		var dweet = dweet[0]; // Dweet is always an array of 1
+		window.buzzerState = dweet.content.Buzzer;
+	});
+        if (window.buzzerState) {
             window.BuzzOn();
         }
         else {
