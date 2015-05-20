@@ -37,10 +37,10 @@ setTimeout(function(){
 		});
 	
 		if (window.buzzerState) {
-			window.buzzOn();
+			window.buzzOff();
 		}
 		else {
-			window.buzzOff();
+			window.buzzOn();
 		}
 		//window.sendBuzz();	
 	});
