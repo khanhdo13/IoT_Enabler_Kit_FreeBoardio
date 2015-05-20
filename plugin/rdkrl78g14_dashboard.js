@@ -2,7 +2,6 @@ window.targetThing = "";
 window.userEmailAddress = "";
 window.currentMachine = "";
 window.LEDstore = [];
-window.Buzzer = "";
 $.support.cors = true;
 
 setTimeout(function(){	
@@ -31,7 +30,8 @@ setTimeout(function(){
 	});
 	
 	$('button#buzzerButton').click(function(e){
-        if (window.Buzzer) {
+	var buzzerState = datasources["RDKRL78G14"]["Buzzer"];
+        if (buzzerState) {
             window.BuzzOn();
         }
         else {
