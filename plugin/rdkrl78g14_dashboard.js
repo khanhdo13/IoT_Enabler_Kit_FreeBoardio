@@ -31,7 +31,18 @@ setTimeout(function(){
 	});
 	
 	$('button#buzzerButton').click(function(e){
-		window.sendBuzz();	
+		dweetio.get_latest_dweet_for(window.targetThing, function(err, dweet){
+    			var dweet = dweet[0]; // Dweet is always an array of 1
+			window.buzzerState = dweet.content.Buzzer;
+		});
+	
+		if (window.buzzerState) {
+			window.buzzOn();
+		}
+		else {
+			window.buzzOff();
+		}
+		//window.sendBuzz();	
 	});
 	
 	$('button#led').click(function(e){
@@ -167,34 +178,32 @@ window.setRL78Text = function(text,linenum) {
 		},750);	
 }
 
-
-window.sendBuzz = function() {
+window.buzzOn = function() {
 	if (window.targetThing == "") {
 		freeboard.showDialog($("<div align='center'>Error: Please set thing name!</div>"),"Error!","OK",null,function(){}); 	
 		return;	
 	}
-	
-	dweetio.get_latest_dweet_for(window.targetThing, function(err, dweet){
-    		var dweet = dweet[0]; // Dweet is always an array of 1
-		window.buzzerState = dweet.content.Buzzer;
-	});
-	
-	if (window.buzzerState) {
-		dweetio.dweet_for(window.targetThing+'-send', {"beep":false}, function(err, dweet){});
-	}
-	else {
-		dweetio.dweet_for(window.targetThing+'-send', {"beep":true}, function(err, dweet){});
-	}
-	
+
+	dweetio.dweet_for(window.targetThing+'-send', {"beep":true}, function(err, dweet){});
+
  	freeboard.showLoadingIndicator(true);
 	setTimeout(function(){	
 		freeboard.showLoadingIndicator(false);
-		if (window.buzzerState){
-			freeboard.showDialog($("<div align='center'>Buzzer deactivated on RL78 "+window.targetThing+"</div>"),"Success!","OK",null,function(){}); 
-		}
-		else {
-			freeboard.showDialog($("<div align='center'>Buzzer activated on RL78 "+window.targetThing+"</div>"),"Success!","OK",null,function(){}); 
-		}
-		//freeboard.showDialog($("<div align='center'>Buzzer activated on RL78 "+window.targetThing+"</div>"),"Success!","OK",null,function(){}); 
+		freeboard.showDialog($("<div align='center'>Buzzer activated on RL78 "+window.targetThing+"</div>"),"Success!","OK",null,function(){}); 
+	},750);	
+}
+
+window.buzzOff = function() {
+	if (window.targetThing == "") {
+		freeboard.showDialog($("<div align='center'>Error: Please set thing name!</div>"),"Error!","OK",null,function(){}); 	
+		return;	
+	}
+
+	dweetio.dweet_for(window.targetThing+'-send', {"beep":false}, function(err, dweet){});
+
+ 	freeboard.showLoadingIndicator(true);
+	setTimeout(function(){	
+		freeboard.showLoadingIndicator(false);
+		freeboard.showDialog($("<div align='center'>Buzzer deactivated on RL78 "+window.targetThing+"</div>"),"Success!","OK",null,function(){}); 
 	},750);	
 }
