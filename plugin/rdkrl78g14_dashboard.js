@@ -2,7 +2,7 @@ window.targetThing = "";
 window.userEmailAddress = "";
 window.currentMachine = "";
 window.LEDstore = [];
-window.buzzerState;
+window.buzzerState = "";
 $.support.cors = true;
 
 setTimeout(function(){	
@@ -189,6 +189,12 @@ window.sendBuzz = function() {
  	freeboard.showLoadingIndicator(true);
 	setTimeout(function(){	
 		freeboard.showLoadingIndicator(false);
-		freeboard.showDialog($("<div align='center'>Buzzer activated on RL78 "+window.targetThing+"</div>"),"Success!","OK",null,function(){}); 
+		if (window.buzzerState){
+			freeboard.showDialog($("<div align='center'>Buzzer deactivated on RL78 "+window.targetThing+"</div>"),"Success!","OK",null,function(){}); 
+		}
+		else {
+			freeboard.showDialog($("<div align='center'>Buzzer activated on RL78 "+window.targetThing+"</div>"),"Success!","OK",null,function(){}); 
+		}
+		//freeboard.showDialog($("<div align='center'>Buzzer activated on RL78 "+window.targetThing+"</div>"),"Success!","OK",null,function(){}); 
 	},750);	
 }
