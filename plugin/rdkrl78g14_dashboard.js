@@ -30,7 +30,7 @@ setTimeout(function(){
 	});
 	
 	$('button#buzzerButton').click(function(e){
-	var buzzerState = datasources["RDKRL78G14"]["Buzzer"];
+	var buzzerState = datasources["DemoBoard"]["Buzzer"];
         if (buzzerState) {
             window.BuzzOn();
         }
